@@ -44,6 +44,79 @@ test('Page Playwright test', async ({ page }) => {
 
 })
 
+test('UI Controls', async ({ page }) => {
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/')
+    //Locators
+    const userName = page.locator('#username')
+    const password = page.locator('#password')
+    
+    //radio buttons
+    await page.locator('.checkmark').last().click();
+    await expect(page.locator('.checkmark').last()).toBeChecked();
+    console.log(await page.locator('.checkmark').last().isChecked());
+    //popup
+    //await page.locator('#okayBtn').click()
+    //select el
+    const dropdown = page.locator('select.form-control')
+    await dropdown.selectOption('consult')
+
+    //checkbox
+    await page.locator('#terms').click()
+    await expect(page.locator('#terms')).toBeChecked();
+    await page.locator('#terms').uncheck();
+    //one way
+    await expect(page.locator('#terms')).not.toBeChecked();
+    //second way
+    expect(await page.locator('#terms').isChecked()).toBeFalsy();
+    //await is inside cause we perform action under locator
+    
+    const documentLink = page.locator('[href*="documents-request"]');
+    //check attribute
+    await expect(documentLink).toHaveAttribute('class', 'blinkingText')
+
+    //page.pause();
+    const signIn = page.locator('[type="submit"]')
+   
+
+})
+
+
+test.only('Child windows handling', async ({ browser}) => {
+    const context = await browser.newContext();
+    const page = await context.newPage()
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/')
+    const documentLink = page.locator('[href*="documents-request"]');
+
+   const [newPage] = await Promise.all( //to be asynhronic
+        [ //how to handle new page
+            context.waitForEvent('page'), //this listens for new page
+            //so we write it before clicking on new page link 
+        
+            documentLink.click()
+        ]
+    ) //kad treba neki koraci da se paralelno izvrse
+
+    
+    const text = await newPage.locator('[class="im-para red"]').textContent()
+    //Please email us at mentor@rahulshettyacademy.com with below template to receive response 
+    const textArray = text.split('@') //deli string na 2 dela od ovog znaka
+    textArray[1] //we are taking second element, drugi deo stringa
+    //rahulshettyacademy.com with below template to receive response
+    const domain = textArray[1].split(' ')[0] //podeli na prvi prazan space i uzmi prvi deo
+    //rahulshettyacademy.com
+    console.log(domain);
+    
+    const userName = page.locator('#username')
+    await page.locator('#username').fill(domain)
+    console.log(await page.locator('#username').inputValue())
+    await page.pause()
+    
+
+  
+
+})
+
+
 
 
 
