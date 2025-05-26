@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 
-test.only('Login test', async ({ page }) => {
+test('Login test', async ({ page }) => {
    await page.goto('https://rahulshettyacademy.com/client')
 
    //locators
