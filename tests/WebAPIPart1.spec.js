@@ -51,6 +51,7 @@ test('Place the order', async ({ page }) => {
 
    }
 
+
    const orderIdDeatils = await page.locator('.col-title + div').textContent();
    expect(response.orderId.includes(orderIdDeatils)).toBeTruthy();
 })
