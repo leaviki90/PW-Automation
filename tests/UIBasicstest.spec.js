@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 
-test('Browser Context Playwright test', async ({ browser }) => {
+test.only('Browser Context Playwright test', async ({ browser }) => {
 
 
     //playwright code
@@ -13,12 +13,19 @@ test('Browser Context Playwright test', async ({ browser }) => {
     //ovo samo otvara browser (koji mu mi prosledimo)
     const page = await context.newPage() //na ovoj stranici unosimo nas url i krecemo da automatizujemo
    
+    //await page.route('**/*.css', route => route.abort()); //will stop the call to reach the browser
+
+
     //locators
     const userName = page.locator('#username')
     const password = page.locator('#password')
     const signIn = page.locator('[type="submit"]')
     const cardTitles = page.locator('.card-body a')
 
+    page.on('request', request=> console.log(request.url()))
+    //how to catch failed requests
+    page.on('response', response => console.log(response.url(), response.status()))
+    //to see response and status
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/')
     console.log(await page.title())
     await userName.fill('rahulshetty');
