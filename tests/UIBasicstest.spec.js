@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 
-test.only('Browser Context Playwright test', async ({ browser }) => {
+test('Browser Context Playwright test', async ({ browser }) => {
 
 
     //playwright code
