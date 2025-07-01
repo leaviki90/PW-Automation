@@ -12,7 +12,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.4"
+    "@types/node": "^22.13.4",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
